@@ -58,19 +58,20 @@ while True:
 	mask = cv2.erode(mask, None, iterations=2)
 	mask = cv2.dilate(mask, None, iterations=2)
 
-    # find contours in the mask and initialize the current
-	# (x, y) center of the ball
+    # find contours in the mask -- contours are basically a curve joining all
+    # the continuous points that have the same color and intensity
 	cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
 		cv2.CHAIN_APPROX_SIMPLE)
 	cnts = imutils.grab_contours(cnts)
 	center = None
 	# only proceed if at least one contour was found
 	if len(cnts) > 0:
-		# find the largest contour in the mask, then use
-		# it to compute the minimum enclosing circle and
-		# centroid
+		# find the largest contour in the mask, then use it to compute the minimum 
+		# enclosing circle and centroid
 		c = max(cnts, key=cv2.contourArea)
 		((x, y), radius) = cv2.minEnclosingCircle(c)
+
+		# this link explains: https://docs.opencv.org/master/dd/d49/tutorial_py_contour_features.html
 		M = cv2.moments(c)
 		center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
 		# only proceed if the radius meets a minimum size
@@ -85,8 +86,7 @@ while True:
 
     # loop over the set of tracked points
 	for i in range(1, len(pts)):
-		# if either of the tracked points are None, ignore
-		# them
+		# if either of the tracked points are None, ignore them
 		if pts[i - 1] is None or pts[i] is None:
 			continue
 		# otherwise, compute the thickness of the line and
