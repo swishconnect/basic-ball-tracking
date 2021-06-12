@@ -88,8 +88,8 @@ while True:
         '''
         largestContour = max(contours, key=cv2.contourArea)
         ((x, y), radius) = cv2.minEnclosingCircle(largestContour)
-        moments = cv2.moments(largestContour)
-        center = ( int(moments["m10"]) / moments["m00"], int(moments["m01"]), moments["m00"]) #(x, y) using the moments of the largest contour
+        ballMoments = cv2.moments(largestContour)
+        center = (int(ballMoments["m10"] / ballMoments["m00"]), int(ballMoments["m01"] / ballMoments["m00"])) #(x, y) using the moments of the largest contour
 
         #this only happens if the radius is a minimum size
         if radius > 10:
@@ -108,8 +108,6 @@ while True:
         #if there is a point then find the thickness of the line and draw the connecting lines
         thickness = int(numpy.sqrt(args["buffer"] / float(index + 1)) * 2.5)
         cv2.line(img=frame, point1=points[index - 1], point2=points[index], color=(0, 0, 255), thickness=thickness)
-        cv2.line()
-
     #show frame to the screen
     cv2.imshow("Frame", frame)
     key = cv2.waitKey(1) & 0xFF #what
