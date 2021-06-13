@@ -107,7 +107,7 @@ while True:
 
         #if there is a point then find the thickness of the line and draw the connecting lines
         thickness = int(numpy.sqrt(args["buffer"] / float(index + 1)) * 2.5)
-        cv2.line(img=frame, point1=points[index - 1], point2=points[index], color=(0, 0, 255), thickness=thickness)
+        cv2.line(img=frame, pt1=points[index - 1], pt2=points[index], color=(0, 0, 255), thickness=thickness)
     #show frame to the screen
     cv2.imshow("Frame", frame)
     key = cv2.waitKey(1) & 0xFF #what
