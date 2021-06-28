@@ -13,8 +13,8 @@ args = vars(ap.parse_args())
 
 # define the lower and upper boundaries of the "green" ball in the HSV color space
 # for a basketball, we'll need to change these values
-greenLower = (29, 86, 6)
-greenUpper = (64, 255, 255)
+blueLower = (150, 150, 0)
+blueUpper = (180, 255, 255)
 
 # initializing list of tracking points by using the argument passed earlier
 pts = deque(maxlen=args["buffer"])
@@ -52,7 +52,7 @@ while True:
 
 	# construct a mask for the color "green" -> basically filters out
     # anything that's not in the specified HSV range
-	mask = cv2.inRange(hsv, greenLower, greenUpper)
+	mask = cv2.inRange(hsv, blueLower, blueUpper)
 
     # series of erosions + dilations removes any remaining blobs
 	mask = cv2.erode(mask, None, iterations=2)
